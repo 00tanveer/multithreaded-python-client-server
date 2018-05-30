@@ -8,8 +8,10 @@ def Main():
     # Define the port on which you want to connect
     port = 12345
 
+    s = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+
     # connect to server on local computer
-    s.connect((host.port))
+    s.connect((host,port))
 
     # message I send to server
     message = 'Tan says hello'
