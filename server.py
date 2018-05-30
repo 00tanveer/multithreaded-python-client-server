@@ -4,6 +4,7 @@ import socket
 # import thread module
 from _thread import start_new_thread
 import threading
+import time
 
 print_lock = threading.Lock()
 
@@ -20,11 +21,16 @@ def threaded(c):
             print_lock.release()
             break
 
-        # reverse the given string from client
-        data = data[::-1]
+        # if a match-run signal, then run 1 mathcing
+        message = str(data.decode('ascii'))
+        if message == 'run 1 matching':
+            print('running matching')
+            time.sleep(2)
+            response = 'finished running 1 matching'
+            print(response)
 
-        # send back reversed string to client
-        c.send(data)
+            # send finish reponse to client
+            c.send(response.encode('ascii'))
 
     # connection closed
     c.close()
@@ -50,7 +56,7 @@ def Main():
         # establish connection with client
         c, addr = s.accept()
 
-        # lock acquired by client
+        # lock acquired by client, it hogs the connection
         print_lock.acquire()
         print('Connected to :', addr[0], ':', addr[1])
 

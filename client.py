@@ -14,7 +14,7 @@ def Main():
     s.connect((host,port))
 
     # message I send to server
-    message = 'Tan says hello'
+    message = 'run 1 matching'
     while True:
         # message sent to server
         s.send(message.encode('ascii'))
