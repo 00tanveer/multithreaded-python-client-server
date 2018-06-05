@@ -1,0 +1,60 @@
+//academics
+Cambridge
+Edexcel
+IB
+GED
+Australian
+Bangla Medium
+English Version
+Madrasa
+
+//music
+Guitar
+Vocal
+Drums
+Keyboard
+Tabla
+Flute
+Harmonium
+Violin
+
+//sports
+Football
+Cricket
+Table tennis
+Chess
+Badminton
+Swimming
+Cycling
+Billiard
+Fitness
+
+//languages
+English
+Bangla
+French
+Spanish
+German
+Chinese
+Arabic
+Hindi
+
+//fine arts
+Drawing and Painting
+Sculpture
+
+//driving
+Car
+Motorcycle
+
+//dancing
+Classical
+Salsa
+Hiphop
+Tango
+
+//religion
+Islam
+Christianity
+Buddhism
+Hinduism

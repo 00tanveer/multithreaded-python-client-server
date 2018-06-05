@@ -6,34 +6,54 @@ from _thread import start_new_thread
 import threading
 import time
 
+import subprocess
+
+n = 0
+count = 0
 print_lock = threading.Lock()
 
 # thread function
 def threaded(c):
     while True:
-
         # data received from client
         data = c.recv(1024)
+        global n
+        global count
         if not data:
             print('Bye')
 
             # lock released on exit
             print_lock.release()
             break
-
+        if n < 5 and count == 1:
+            c.close()
+            print_lock.release()
+            break
         # if a match-run signal, then run 1 mathcing
         message = str(data.decode('ascii'))
         if message == 'run 1 matching':
             print('running matching')
-            time.sleep(2)
+            subprocess.call(['python', 'mongopython.py'])
+            count = count + 1
             response = 'finished running 1 matching'
             print(response)
 
             # send finish reponse to client
             c.send(response.encode('ascii'))
-
+            c.close()
+            print_lock.release()
+            break
     # connection closed
-    c.close()
+
+def timer():
+    global n
+    global count
+    while True:
+        n = n + 1
+        time.sleep(1)
+        print(n)
+        if(n == 5):
+            n = 0
 
 def Main():
     host = ''
@@ -44,11 +64,14 @@ def Main():
     port = 12345
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.bind((host, port))
-    print('socket binded to post', port)
-    
-    # put the socekt into listening mode
+    print('socket binded to port', port)
+
+    # put the socket into listening mode
     s.listen(5)
     print('socket is listening')
+
+    # start timer
+    start_new_thread(timer, ())
 
     # a forever loop until client wants to exit
     while True:

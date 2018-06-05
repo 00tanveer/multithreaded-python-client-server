@@ -1,0 +1,41 @@
+//english medium
+English (O Levels)
+Bangla (O Levels)
+General Mathematics/B (O Levels)
+Additional/Pure Mathematics (O Levels)
+Physics
+Chemistry
+Biology
+Economics
+Accounting
+Business Studies
+Commerce
+Further Mathematics (A Levels)
+
+//bangla medium
+English (National Curriculum)
+Bangla (National Curriculum)
+Mathematics (Bangla Medium)
+Higher Mathematics (Bangla Medium)
+General Science (Bangla Medium)
+Physics (Bangla Medium)
+Chemistry (Bangla Medium)
+Biology (Bangla Medium)
+ICT (Bangla Medium)
+Social Science (Bangla Medium)
+Islamic Studies (Bangla Medium)
+Bangladesh and Global Studies (Bangla Medium)
+Accounting (Bangla Medium)
+
+//english version
+Mathematics (English Version)
+Higher Mathematics (English Version)
+General Science (English Version)
+Physics (English Version)
+Chemistry (English Version)
+Biology (English Version)
+ICT (English Version)
+Social Science (English Version)
+Islamic Studies (English Version)
+Bangladesh and Global Studies (English Version)
+Accounting (English Version)
