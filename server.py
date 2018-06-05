@@ -27,6 +27,10 @@ def threaded(c):
             print_lock.release()
             break
         if n < WINDOW_SIZE and count == 1:
+            response = 'recently ran 1 matching'
+            print(response)
+            # send reponse to client
+            c.send(response.encode('ascii'))
             c.close()
             print_lock.release()
             break
