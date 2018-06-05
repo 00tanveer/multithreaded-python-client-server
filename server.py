@@ -56,7 +56,6 @@ def timer():
     while True:
         n = n + 1
         time.sleep(1)
-        print(n)
         if(n == WINDOW_SIZE):
             n = 0
 
