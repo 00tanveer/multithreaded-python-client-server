@@ -11,6 +11,7 @@ import subprocess
 n = 0
 count = 0
 print_lock = threading.Lock()
+WINDOW_SIZE = 5
 
 # thread function
 def threaded(c):
@@ -25,7 +26,7 @@ def threaded(c):
             # lock released on exit
             print_lock.release()
             break
-        if n < 5 and count == 1:
+        if n < WINDOW_SIZE and count == 1:
             c.close()
             print_lock.release()
             break
@@ -52,7 +53,7 @@ def timer():
         n = n + 1
         time.sleep(1)
         print(n)
-        if(n == 5):
+        if(n == WINDOW_SIZE):
             n = 0
 
 def Main():
@@ -67,7 +68,7 @@ def Main():
     print('socket binded to port', port)
 
     # put the socket into listening mode
-    s.listen(5)
+    s.listen(2)
     print('socket is listening')
 
     # start timer
