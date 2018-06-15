@@ -10,11 +10,12 @@ import subprocess
 
 n = 0
 count = 0
+c = 0
 print_lock = threading.Lock()
 WINDOW_SIZE = 5
 
 # thread function
-def threaded(c):
+def connection(c):
     while True:
         # data received from client
         data = c.recv(1024)
@@ -22,50 +23,41 @@ def threaded(c):
         global count
         if not data:
             print('Bye')
-
-            # lock released on exit
-            print_lock.release()
             break
-        if n < WINDOW_SIZE and count == 1:
-            response = 'recently ran 1 matching'
-            print(response)
+        message = str(data.decode('ascii'))
+        if n <= WINDOW_SIZE and message == 'run 1 matching':
+            print('ACK - stashed match call')
+            count = count + 1
+            response = 'ACK - stashed match call'
+
             # send reponse to client
             c.send(response.encode('ascii'))
-            c.close()
-            print_lock.release()
-            break
-        # if a match-run signal, then run 1 mathcing
-        message = str(data.decode('ascii'))
-        if message == 'run 1 matching':
-            print('running matching')
-            subprocess.call(['python', 'mongopython.py'])
-            count = count + 1
-            response = 'finished running 1 matching'
-            print(response)
-
-            # send finish reponse to client
-            c.send(response.encode('ascii'))
-            c.close()
-            print_lock.release()
-            break
-    # connection closed
 
 def timer():
     global n
     global count
+    global c
     while True:
         n = n + 1
         time.sleep(1)
+        print(n)
         if(n == WINDOW_SIZE):
             n = 0
+            if(count > 0):
+                response = 'ACK - ran matching routine'
+                print('running matching routine')
+                count = 0
+                subprocess.call(['python', 'mongopython.py'])
+                c.send(response.encode('ascii'))
 
 def Main():
+    global c
     host = ''
 
     # reverse a port on your computer
     # in our case it is 12345 but it
     # can be anything
-    port = 12345
+    port = 1234
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.bind((host, port))
     print('socket binded to port', port)
@@ -77,19 +69,14 @@ def Main():
     # start timer
     start_new_thread(timer, ())
 
-    # a forever loop until client wants to exit
     while True:
-
         # establish connection with client
         c, addr = s.accept()
 
-        # lock acquired by client, it hogs the connection
-        print_lock.acquire()
         print('Connected to :', addr[0], ':', addr[1])
 
         # Start a new thread and return its identifier
-        start_new_thread(threaded, (c,))
-    s.close()
+        start_new_thread(connection, (c,))
 
 if __name__ == '__main__':
     Main()
